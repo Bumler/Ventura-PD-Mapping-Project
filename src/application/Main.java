@@ -16,9 +16,11 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextArea;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.text.Text;
 
 
 public class Main extends Application {
@@ -50,6 +52,7 @@ public class Main extends Application {
 				public void handle(ActionEvent event) {
 					AddressCleaner cleaner = new AddressCleaner();
 					ArrayList<String> addresses = cleaner.getCleanedAddresses(file);
+					showAddresses(addresses);
 				}
 	        	
 	        });
@@ -65,6 +68,34 @@ public class Main extends Application {
 	        primaryStage.show();
 	    }
 	
+	public void showAddresses(ArrayList<String> addresses) {
+		Stage stage = new Stage();
+		stage.setTitle("Addresses");
+		
+		GridPane grid = new GridPane();
+        grid.setAlignment(Pos.CENTER);
+        grid.setHgap(10);
+        grid.setVgap(10);
+        grid.setPadding(new Insets(25, 25, 25, 25));
+        
+        TextArea addressesText = new TextArea(formatList(addresses));
+        addressesText.setEditable(false);
+		grid.add(addressesText, 0, 0);
+		
+		
+		stage.setScene(new Scene(grid, 450, 450));
+		
+		
+		stage.show();
+	}
+	
+	public String formatList(ArrayList<String> list) {
+		StringBuilder sb = new StringBuilder();
+		for(String str : list) {
+			sb.append(str + "\n");
+		}
+		return sb.toString();
+	}
 	public static void main(String[] args) {
 		launch(args);
 	}

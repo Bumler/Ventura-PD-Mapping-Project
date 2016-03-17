@@ -1,3 +1,5 @@
+package application;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -13,25 +15,26 @@ public class AddressCleaner {
  	public ArrayList<String> getCleanedAddresses(File file){
  		 	String line = null;
  		 	ArrayList<String> cleanAddresses = new ArrayList<String>();
- 		 	
+ 		 	ArrayList<String> dirtyAddresses = new ArrayList<String>();
  		          	try {
  		              	// FileReader reads text files in the default encoding.
  		              	FileReader fileReader =
  		                  	new FileReader(file);
-
+ 		              	System.out.println("FILE READING");
  		              	// Always wrap FileReader in BufferedReader.
  		              	BufferedReader bufferedReader =
  		                  	new BufferedReader(fileReader);
-
+ 		              	System.out.println("FILE READING");
  		              	while((line = bufferedReader.readLine()) != null) {
+ 		              		dirtyAddresses.add(line);
  		                  	String[] address = line.split(" ");
- 		                  	startsWithClean(address);
- 		                  	findClean(address);
+ 		                  	//startsWithClean(address);
+ 		                  	//findClean(address);
  		                  	
- 		                  	System.out.println(line);
+ 		                  	System.out.println(line);   	
+ 		              	}
  		              	// Always close files.
- 		              	bufferedReader.close();     	
- 		          	}
+ 		              	bufferedReader.close();  
  		          	}
  		          	catch(FileNotFoundException ex) {
  		              	System.out.println(
@@ -46,11 +49,11 @@ public class AddressCleaner {
  		              	// ex.printStackTrace();
  		              	//changes
  		          	}
- 		          	return cleanAddresses;
+ 		          	return dirtyAddresses;
  		          	//ayylmao
  		  	}
 
- 	public  String[] startsWithClean(String[] address){
+ 	/*public  String[] startsWithClean(String[] address){
  		for (String s : startsList){
  			for (int i = 0; i < address.length; i++){
  				if (address[i].startsWith(s)){
@@ -63,4 +66,5 @@ public class AddressCleaner {
  	public String[] findClean(String address){
  		
  	}
+ 	*/
 }
