@@ -8,33 +8,55 @@ import java.io.IOException;
 import java.util.ArrayList;
 public class AddressCleaner {
 	
-	ArrayList<String> startsList = new ArrayList<String>();
-	ArrayList<String> findList = new ArrayList<String>();
+	ArrayList<String> cleanAddresses = new ArrayList<String>();
 	
+	ArrayList<String[]> startList = new ArrayList<String[]>();
+	ArrayList<String[]> findList = new ArrayList<String[]>();
+	String[] empty = {""};
+	
+	public static void main (String[] args){
+		File f = new File("C:\\Users\\Bumbum\\Desktop\\address.txt");
+		AddressCleaner c = new AddressCleaner();
+		c.addStartList("#", "deleteW");
+		c.addFindList("/", "replaceW", "&");
+		c.addStartList("Bogus", "deleteC");
+		ArrayList<String>test = c.getCleanedAddresses(f);
+		
+		for(int i = 0;i < test.size(); i++){
+			System.out.println(test.get(i));
+		}
+	}
  
- 	public ArrayList<String> getCleanedAddresses(File file){
- 		 	String line = null;
- 		 	ArrayList<String> cleanAddresses = new ArrayList<String>();
- 		 	ArrayList<String> dirtyAddresses = new ArrayList<String>();
+	public AddressCleaner(){	
+	}
+	
+ 	public  ArrayList<String> getCleanedAddresses(File file){
+ 		 	String line = null;	 	
+ 		 	System.out.println(findList.get(0)[1]);
  		          	try {
  		              	// FileReader reads text files in the default encoding.
  		              	FileReader fileReader =
  		                  	new FileReader(file);
- 		              	System.out.println("FILE READING");
+
  		              	// Always wrap FileReader in BufferedReader.
  		              	BufferedReader bufferedReader =
  		                  	new BufferedReader(fileReader);
- 		              	System.out.println("FILE READING");
+
+ 		              	//if the file reading is successful it will go through each address
+ 		              	//each address is than checked through our paremeters (startList and findList)
+ 		              	//the line is split by word and that array is send to our checking methods
  		              	while((line = bufferedReader.readLine()) != null) {
- 		              		dirtyAddresses.add(line);
- 		                  	String[] address = line.split(" ");
- 		                  	//startsWithClean(address);
- 		                  	//findClean(address);
+ 		              		String[] address = line.split(" ");
+ 		                  	address = startsWithClean(address);
+ 		                  	address = findClean(address);
  		                  	
- 		                  	System.out.println(line);   	
- 		              	}
+ 		                  	for (int i = 0; i < address.length; i++){
+ 		                  		System.out.print(address[i] + " ");
+ 		                  	}
+ 		                  	System.out.println();
  		              	// Always close files.
- 		              	bufferedReader.close();  
+ 		              	}
+ 		              	bufferedReader.close();   
  		          	}
  		          	catch(FileNotFoundException ex) {
  		              	System.out.println(
@@ -49,22 +71,84 @@ public class AddressCleaner {
  		              	// ex.printStackTrace();
  		              	//changes
  		          	}
- 		          	return dirtyAddresses;
+ 		          	return cleanAddresses;
  		          	//ayylmao
  		  	}
 
- 	/*public  String[] startsWithClean(String[] address){
- 		for (String s : startsList){
+ 	public  String[] startsWithClean(String[] address){
+ 		for (int j = 0; j < startList.size(); j++){
+ 			String s = startList.get(j)[0];
  			for (int i = 0; i < address.length; i++){
  				if (address[i].startsWith(s)){
- 					
+ 					String sw = startList.get(j)[1];
+ 					switch (sw){
+ 					case "replaceW":
+ 						System.out.println("?");
+ 						address[i] = startList.get(j)[2];
+ 						break;
+ 					case "deleteW":
+ 						address[i] = ("");
+ 						break;
+ 					case "deleteC":
+ 						address = empty;
+ 						i = Integer.MAX_VALUE-1;
+ 						break;
+ 					default: 
+ 						System.out.println("flag");
+ 					}
  				}
  			}
  		}
+ 		return address;
  	}
  	
- 	public String[] findClean(String address){
- 		
+ 	//this functions the same as the starts with method but instead of checking for a starts with it looks for an identical string
+ 	public String[] findClean(String[] address){
+ 		for (int j = 0; j < findList.size(); j++){
+ 			String s = findList.get(j)[0];
+ 			for (int i = 0; i < address.length; i++){
+ 				//System.out.println(i);
+ 				if (address[i].equals(s)){
+ 					//System.out.println("slay me?");
+ 					String sw = findList.get(j)[1];
+ 					switch (sw){
+ 					case "replaceW":
+ 						address[i] = findList.get(j)[2];
+ 						break;
+ 					case "deleteW":
+ 						address[i] = ("");
+ 						break;
+ 					case "deleteC":
+ 						address = empty;
+ 						i = Integer.MAX_VALUE;
+ 						break;
+ 					default: 
+ 						System.out.println("flag");
+ 					}
+ 				}
+ 			}
+ 		}
+ 		return address;
  	}
- 	*/
+ 	
+ 	public void addStartList (String s, String type){
+ 		String[] parameter = {s, type};
+ 		startList.add(parameter);
+ 	}
+ 	
+ 	public void addStartList (String s, String type, String replace){
+ 		String[] parameter = {s, type, replace};
+ 		startList.add(parameter);
+ 	}
+ 	
+ 	public void addFindList (String s, String type){
+ 		String[] parameter = {s, type};
+ 		findList.add(parameter);
+ 	}
+ 	
+ 	public void addFindList (String s, String type, String replace){
+ 		String[] parameter = {s, type, replace};
+ 		findList.add(parameter);
+ 	}
 }
+
