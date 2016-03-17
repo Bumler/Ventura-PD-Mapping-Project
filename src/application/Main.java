@@ -17,6 +17,8 @@ import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
+import javafx.scene.input.Clipboard;
+import javafx.scene.input.ClipboardContent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
@@ -78,10 +80,16 @@ public class Main extends Application {
         grid.setVgap(10);
         grid.setPadding(new Insets(25, 25, 25, 25));
         
-        TextArea addressesText = new TextArea(formatList(addresses));
+        String addressString = formatList(addresses);
+        
+        TextArea addressesText = new TextArea(addressString);
         addressesText.setEditable(false);
 		grid.add(addressesText, 0, 0);
 		
+		final Clipboard clipboard = Clipboard.getSystemClipboard();
+        final ClipboardContent content = new ClipboardContent();
+        content.putString(addressString);
+        clipboard.setContent(content);
 		
 		stage.setScene(new Scene(grid, 450, 450));
 		
