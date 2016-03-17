@@ -29,10 +29,12 @@ public class Main extends Application {
 	//Hello Github!
 	FileChooser fileChooser;
 	File file;
+	Button btn, btn2;
 	 @Override
 	    public void start(Stage primaryStage) {
-	        primaryStage.setTitle("Hello World!");
-	        Button btn = new Button();
+	        primaryStage.setTitle("Address Cleaner");
+	        
+	        btn = new Button();
 	        btn.setText("Choose File");
 	        btn.setOnAction(new EventHandler<ActionEvent>() {
 	 
@@ -43,11 +45,13 @@ public class Main extends Application {
 	                fileChooser = new FileChooser();
 	                fileChooser.setTitle("File Chooser");
 	                file = fileChooser.showOpenDialog(primaryStage);
+	                btn2.setDisable(false);
 	            }
 	        });
 	        
-	        Button btn2 = new Button();
+	        btn2 = new Button();
 	        btn2.setText("Clean");
+	        btn2.setDisable(true);
 	        btn2.setOnAction(new EventHandler<ActionEvent>() {
 
 				@Override
