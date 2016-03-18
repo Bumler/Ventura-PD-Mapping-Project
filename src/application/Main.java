@@ -57,6 +57,9 @@ public class Main extends Application {
 				@Override
 				public void handle(ActionEvent event) {
 					AddressCleaner cleaner = new AddressCleaner();
+					cleaner.addStartList("#", "deleteW");
+					cleaner.addFindList("/", "replaceW", "&");
+					cleaner.addStartList("Bogus", "deleteC");
 					ArrayList<String> addresses = cleaner.getCleanedAddresses(file);
 					showAddresses(addresses);
 				}

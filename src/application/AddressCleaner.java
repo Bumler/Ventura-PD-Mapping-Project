@@ -14,7 +14,7 @@ public class AddressCleaner {
 	ArrayList<String[]> findList = new ArrayList<String[]>();
 	String[] empty = {""};
 	
-	public static void main (String[] args){
+	/* public static void main (String[] args){
 		File f = new File("C:\\Users\\Bumbum\\Desktop\\address.txt");
 		AddressCleaner c = new AddressCleaner();
 		c.addStartList("#", "deleteW");
@@ -25,10 +25,10 @@ public class AddressCleaner {
 		for(int i = 0;i < test.size(); i++){
 			System.out.println(test.get(i));
 		}
-	}
+	} 
  
 	public AddressCleaner(){	
-	}
+	} */
 	
  	public  ArrayList<String> getCleanedAddresses(File file){
  		 	String line = null;	 	
@@ -49,10 +49,13 @@ public class AddressCleaner {
  		              		String[] address = line.split(" ");
  		                  	address = startsWithClean(address);
  		                  	address = findClean(address);
- 		                  	
+ 		                  	StringBuilder sb = new StringBuilder();
  		                  	for (int i = 0; i < address.length; i++){
  		                  		System.out.print(address[i] + " ");
+ 		                  		
+ 		                  		sb.append(address[i] + " ");
  		                  	}
+ 		                  	cleanAddresses.add(sb.toString());
  		                  	System.out.println();
  		              	// Always close files.
  		              	}
