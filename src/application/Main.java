@@ -137,13 +137,49 @@ public class Main extends Application {
 			        	grid.add(textField2, 12, i);
 			        	i += 2;
 			        }
-			        final int j = i;
+			        Button btnAdd = new Button();
+			        btnAdd.setText("Add");
 			        Button btnSave = new Button();
 			        btnSave.setText("Save");
+			        
+			        grid.add(btnAdd, 0, i);
 			        grid.add(btnSave, 16, i);
 			        stage.setScene(new Scene(grid, 900, 450));
 			        stage.show();
 			        
+			        btnAdd.setOnAction(new EventHandler<ActionEvent>() {
+
+						@Override
+						public void handle(ActionEvent event) {
+							ObservableList<String> options1 = 
+				        		    FXCollections.observableArrayList(
+				        		        "Starts With",
+				        		    	"Find"
+				        		    );
+				        	ComboBox comboBox1 = new ComboBox(options1);
+				        	TextField textField1 = new TextField();
+				        	ObservableList<String> options2 = 
+				        		    FXCollections.observableArrayList(
+				        		        "Replace",
+				        		    	"Delete",
+				        		    	"Delete Cell"
+				        		    );
+				        	ComboBox comboBox2 = new ComboBox(options2);
+				        	TextField textField2 = new TextField();
+				        	
+				        	int i = grid.getRowIndex(btnAdd);
+				        	grid.add(comboBox1, 0, i);
+				        	grid.add(textField1, 4, i);
+				        	grid.add(comboBox2, 8, i);
+				        	grid.add(textField2, 12, i);
+				        	
+				        	grid.setRowIndex(btnAdd, i+2);
+				        	grid.setRowIndex(btnSave, i+2);
+				        	stage.setScene(new Scene(grid, 900, 450));
+					        stage.show();
+						}
+			        	
+			        });
 			        btnSave.setOnAction(new EventHandler<ActionEvent>() {
 			 
 						@Override
@@ -153,7 +189,6 @@ public class Main extends Application {
 							int counter = 0;
 							cleaner.clearSettings();
 							ObservableList<Node> childrens = grid.getChildren();
-							//do {
 					        for(Node node : childrens) {
 					        	if(grid.getRowIndex(node) < k) {
 					        		counter+=1;
@@ -201,9 +236,6 @@ public class Main extends Application {
 					        counter = 0;
 					        	}
 					        }
-					        
-					        
-						//}while(k > 2);
 						} 
 			        }); 
 				}
