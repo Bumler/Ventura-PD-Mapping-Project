@@ -31,6 +31,7 @@ public class AddressCleaner {
 	} */
 	
  	public  ArrayList<String> getCleanedAddresses(File file){
+ 			cleanAddresses = new ArrayList<String>();
  		 	String line = null;	 	
  		 	System.out.println(findList.get(0)[1]);
  		          	try {
@@ -152,6 +153,56 @@ public class AddressCleaner {
  	public void addFindList (String s, String type, String replace){
  		String[] parameter = {s, type, replace};
  		findList.add(parameter);
+ 	}
+ 	
+ 	public void addList(String listType, String s, String type) {
+ 		if(listType.equals("find")) addFindList(s, type);
+ 		if(listType.equals("start")) addStartList(s, type);
+ 	}
+ 	
+ 	public void addList(String listType, String s, String type, String replace) {
+ 		if(listType.equals("find")) {
+ 			if(replace.equals("")) {
+ 				addFindList(s, type);
+ 			} 
+ 			else addFindList(s, type, replace);
+ 		}
+ 		else if(listType.equals("start")) {
+ 			if(replace.equals("")) {
+ 				addStartList(s, type);
+ 			}
+ 			else addStartList(s, type, replace);
+ 		}
+ 	}
+ 	
+ 	public ArrayList<String[]> getSettings() {
+ 		ArrayList<String[]> settings = new ArrayList();
+ 		for(String[] s : startList) {
+ 			String[] arr;
+ 			if(s.length == 3) {
+ 				arr = new String[]{"start", s[0], s[1], s[2] }; 
+ 			}
+ 			else {
+ 				arr = new String[]{"start", s[0], s[1], "" };
+ 			}
+ 			settings.add(arr);
+ 		}
+ 		for(String[] s : findList) {
+ 			String[] arr;
+ 			if(s.length == 3) {
+ 				arr = new String[]{"find", s[0], s[1], s[2] }; 
+ 			}
+ 			else {
+ 				arr = new String[]{"find", s[0], s[1], "" };
+ 			}
+ 			settings.add(arr);
+ 		}
+ 		return settings;
+ 	}
+ 	
+ 	public void clearSettings() {
+ 		startList = new ArrayList<String[]>();
+ 		findList = new ArrayList<String[]>();
  	}
 }
 
