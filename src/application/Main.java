@@ -14,6 +14,7 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.Clipboard;
@@ -36,6 +37,11 @@ public class Main extends Application {
 			cleaner.addStartList("Bogus", "deleteC");
 			
 	        primaryStage.setTitle("Address Cleaner");
+	        GridPane grid = new GridPane();
+	        grid.setAlignment(Pos.CENTER);
+	        grid.setHgap(10);
+	        grid.setVgap(10);
+	        grid.setPadding(new Insets(25, 25, 25, 25));
 	        
 	        btn = new Button();
 	        btn.setText("Choose File");
@@ -50,6 +56,8 @@ public class Main extends Application {
 	                file = fileChooser.showOpenDialog(primaryStage);
 	                if(file != null) {
 	                	btn2.setDisable(false);
+	                	Label fileName = new Label(file.getName());
+	                	grid.add(fileName, 0, 1);
 	                }	             
 	            }
 	        });
@@ -303,17 +311,14 @@ public class Main extends Application {
 			        }); 
 				}
 	        });
-	        GridPane grid = new GridPane();
-	        grid.setAlignment(Pos.CENTER);
-	        grid.setHgap(10);
-	        grid.setVgap(10);
-	        grid.setPadding(new Insets(25, 25, 25, 25));
+
 	        
 	        grid.add(btn, 0, 0);
 	        grid.add(btn2, 4, 0);
 	        grid.add(btnSettings, 4, 4);
-	        primaryStage.setScene(new Scene(grid, 300, 250));
+	        primaryStage.setScene(new Scene(grid, 300, 250));	     
 	        primaryStage.show();
+	        SecondStage secondStage = new SecondStage(primaryStage.getX() + 315, primaryStage.getY());
 	    }
 	
 	public void showAddresses(ArrayList<String> addresses) {
@@ -352,5 +357,134 @@ public class Main extends Application {
 	}
 	public static void main(String[] args) {
 		launch(args);
+	}
+}
+
+class SecondStage {
+	    private File file1 = null;
+        private File file2 = null;
+	public SecondStage(double X, double Y) {
+		Stage stage = new Stage();
+		stage.setX(X);
+		stage.setY(Y);
+		stage.setTitle("City Inserter");
+		
+		GridPane grid = new GridPane();
+        grid.setAlignment(Pos.CENTER);
+        grid.setHgap(10);
+        grid.setVgap(10);
+        grid.setPadding(new Insets(25, 25, 25, 25));
+        
+
+        
+        CityInserter cInsert = new CityInserter();
+        Button btn1 = new Button();
+        btn1.setText("Select City File");
+        
+        Button btn2 = new Button();
+        btn2.setDisable(true);
+        btn2.setText("Select Beat File");
+        
+        Button btn3 = new Button();
+        btn3.setDisable(true);
+        btn3.setText("Go!");
+        
+        btn1.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent arg0) {
+				System.out.println("File Chooser Opened");
+                FileChooser fileChooser = new FileChooser();
+                fileChooser.setTitle("File Chooser");
+                file1 = fileChooser.showOpenDialog(stage);
+                if(file1 != null) {
+                	btn2.setDisable(false);
+                	Label fileName = new Label(file1.getName());
+                	grid.add(fileName, 0, 1);
+                }					
+			}
+        	
+        });
+        btn2.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				System.out.println("File Chooser Opened");
+                FileChooser fileChooser = new FileChooser();
+                fileChooser.setTitle("File Chooser");
+                file2 = fileChooser.showOpenDialog(stage);
+                if(file2 != null) {
+                	btn3.setDisable(false);
+                	Label fileName = new Label(file2.getName());
+                	grid.add(fileName, 4, 1);
+                }	
+			}
+        	
+        });
+        btn3.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				showCities(cInsert.insertCities(file1, file2), cInsert.getFlags());
+			}
+        	
+        });
+
+        grid.add(btn1, 0, 0);
+        grid.add(btn2, 4, 0);
+        grid.add(btn3, 2, 4);
+        stage.setScene(new Scene(grid, 300, 250));
+        stage.show();
+        
+	}
+	
+	public void showCities(ArrayList<String> cityList, ArrayList<Integer> flagsList) {
+		Stage stage = new Stage();
+		stage.setTitle("Cities");
+		
+		GridPane grid = new GridPane();
+        grid.setAlignment(Pos.CENTER);
+        grid.setHgap(10);
+        grid.setVgap(10);
+        grid.setPadding(new Insets(25, 25, 25, 25));
+        
+    
+        String cityString = formatList(cityList);
+        TextArea cityText = new TextArea(cityString);
+        cityText.setEditable(false);
+		grid.add(cityText, 0, 0);
+		
+		String flagsString = formatIList(flagsList);
+		TextArea flagText = new TextArea(flagsString);
+		flagText.setEditable(false);
+		grid.add(flagText, 0, 8);
+		
+		Label flagMsg = new Label("Unable to find cities in row(s):");
+		grid.add(flagMsg, 0, 7);
+		final Clipboard clipboard = Clipboard.getSystemClipboard();
+        final ClipboardContent content = new ClipboardContent();
+        content.putString(cityString);
+        clipboard.setContent(content);
+		
+		stage.setScene(new Scene(grid, 450, 450));
+		
+		
+		stage.show();
+	}
+	
+	public String formatList(ArrayList<String> list) {
+		StringBuilder sb = new StringBuilder();
+		for(String str : list) {
+			sb.append(str + "\n");
+		}
+		return sb.toString();
+	}
+	
+	public String formatIList(ArrayList<Integer> list) {
+		StringBuilder sb = new StringBuilder();
+		for(int i : list) {
+			sb.append(i + "\n");
+		}
+		return sb.toString();
 	}
 }
