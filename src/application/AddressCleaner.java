@@ -33,7 +33,6 @@ public class AddressCleaner {
  	public  ArrayList<String> getCleanedAddresses(File file){
  			cleanAddresses = new ArrayList<String>();
  		 	String line = null;	 	
- 		 	System.out.println(findList.get(0)[1]);
  		          	try {
  		              	// FileReader reads text files in the default encoding.
  		              	FileReader fileReader =
@@ -60,7 +59,8 @@ public class AddressCleaner {
  		                  	System.out.println();
  		              	// Always close files.
  		              	}
- 		              	bufferedReader.close();   
+ 		              	bufferedReader.close();  
+ 		              	fileReader.close();
  		          	}
  		          	catch(FileNotFoundException ex) {
  		              	System.out.println(

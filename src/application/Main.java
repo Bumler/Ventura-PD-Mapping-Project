@@ -1,10 +1,6 @@
 package application;
 	
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.ArrayList;
 
 import javafx.application.Application;
@@ -14,8 +10,6 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.stage.FileChooser;
-import javafx.stage.Stage;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -24,10 +18,9 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.StackPane;
-import javafx.scene.text.Text;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
 
 public class Main extends Application {
@@ -57,7 +50,7 @@ public class Main extends Application {
 	                file = fileChooser.showOpenDialog(primaryStage);
 	                if(file != null) {
 	                	btn2.setDisable(false);
-	                }
+	                }	             
 	            }
 	        });
 	        
@@ -131,10 +124,44 @@ public class Main extends Application {
 			        	}		
 			        	textField2.setText(setting[3]);
 			        	
+			        	Button deleteButton = new Button();
+			        	deleteButton.setText("X");
+			        	
+			        	deleteButton.setOnAction(new EventHandler<ActionEvent>() {
+
+							@Override
+							public void handle(ActionEvent arg0) {
+								final int i = grid.getRowIndex(deleteButton);
+								ObservableList<Node> childrens = grid.getChildren();
+								ArrayList<Node> deleteList = new ArrayList<>();
+								ArrayList<Node> moveList = new ArrayList<>();
+						        for(Node node : childrens) {
+						        	if(grid.getRowIndex(node) == i) {						       
+						        		deleteList.add(node);
+						        	}
+						        	if(grid.getRowIndex(node) > i) {
+						        		moveList.add(node);
+						        	}
+						        }
+						        for(Node node : deleteList) {
+						        	grid.getChildren().remove(node);
+						        }
+						        for(Node node : moveList) {
+						        	int rowIndex = grid.getRowIndex(node);
+						        	int columnIndex = grid.getColumnIndex(node);
+						        	grid.getChildren().remove(node);
+						        	grid.add(node,columnIndex, rowIndex - 2);
+						        }
+						        stage.setScene(new Scene(grid, 900, 450));
+						        stage.show();
+							}
+			        		
+			        	});
 			        	grid.add(comboBox1, 0, i);
 			        	grid.add(textField1, 4, i);
 			        	grid.add(comboBox2, 8, i);
 			        	grid.add(textField2, 12, i);
+			        	grid.add(deleteButton, 16, i);
 			        	i += 2;
 			        }
 			        Button btnAdd = new Button();
@@ -173,6 +200,41 @@ public class Main extends Application {
 				        	grid.add(comboBox2, 8, i);
 				        	grid.add(textField2, 12, i);
 				        	
+				        	Button deleteButton = new Button();
+				        	deleteButton.setText("X");
+				        	
+				        	deleteButton.setOnAction(new EventHandler<ActionEvent>() {
+
+								@Override
+								public void handle(ActionEvent arg0) {
+									final int i = grid.getRowIndex(deleteButton);
+									ObservableList<Node> childrens = grid.getChildren();
+									ArrayList<Node> deleteList = new ArrayList<>();
+									ArrayList<Node> moveList = new ArrayList<>();
+							        for(Node node : childrens) {
+							        	if(grid.getRowIndex(node) == i) {						       
+							        		deleteList.add(node);
+							        	}
+							        	if(grid.getRowIndex(node) > i) {
+							        		moveList.add(node);
+							        	}
+							        }
+							        for(Node node : deleteList) {
+							        	grid.getChildren().remove(node);
+							        }
+							        for(Node node : moveList) {
+							        	int rowIndex = grid.getRowIndex(node);
+							        	int columnIndex = grid.getColumnIndex(node);
+							        	grid.getChildren().remove(node);
+							        	grid.add(node,columnIndex, rowIndex - 2);
+							        }
+							        stage.setScene(new Scene(grid, 900, 450));
+							        stage.show();
+								}
+				        		
+				        	});
+				        	
+				        	grid.add(deleteButton, 16, i);
 				        	grid.setRowIndex(btnAdd, i+2);
 				        	grid.setRowIndex(btnSave, i+2);
 				        	stage.setScene(new Scene(grid, 900, 450));
@@ -229,8 +291,9 @@ public class Main extends Application {
 					        				break;
 					        		}
 					        	}
-					        	if(counter == 4) {
+					        	if(counter == 5) {
 					        System.out.println("Settings: " + setting[0] + setting[1] + setting[2] + setting[3]);
+					        if(setting[3] == null) setting[3] = "";
 					        cleaner.addList(setting[0], setting[1], setting[2], setting[3]);
 					        setting = new String[4];
 					        counter = 0;
