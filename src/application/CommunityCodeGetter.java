@@ -6,13 +6,15 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class CommunityCodeGetter {
 	HashMap <String , String> map = new HashMap<String , String>();
-	public static void main (String[] args){
+	
+	/* public static void main (String[] args){
 		CommunityCodeGetter test = new CommunityCodeGetter();
 		File f = new File("sampleRD.txt");
 		ArrayList<String> array = test.getCommunityCodes(f);
@@ -21,6 +23,7 @@ public class CommunityCodeGetter {
 			System.out.println(array.get(i));
 		}
 	}
+	*/
 	public CommunityCodeGetter(){
 		map = getMap();
 	}
@@ -66,7 +69,7 @@ public class CommunityCodeGetter {
 	      HashMap<String , String> map = null;
 	      try
 	      {
-	         FileInputStream fis = new FileInputStream("hashmap.ser");
+	         InputStream fis = this.getClass().getResourceAsStream("hashmap.ser");
 	         ObjectInputStream ois = new ObjectInputStream(fis);
 	         map = (HashMap) ois.readObject();
 	         ois.close();
