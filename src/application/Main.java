@@ -11,6 +11,7 @@ import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.geometry.VPos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -50,6 +51,9 @@ public class Main extends Application {
 		Text header = new Text("V.C. Data Automator");
 		header.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
 
+		HBox col1 = new HBox();
+		HBox col2 = new HBox();
+		
 		Button aCleaner = new Button();
 		aCleaner.setText("Address Cleaner");
 		aCleaner.setOnAction(new EventHandler<ActionEvent>() {
@@ -71,6 +75,10 @@ public class Main extends Application {
 			}
 
 		});
+		
+		col1.getChildren().addAll(aCleaner, cInserter);
+		col1.setSpacing(65.0);
+		
 		Button ccGetter = new Button();
 		ccGetter.setText("Community Code Getter");
 		ccGetter.setOnAction(new EventHandler<ActionEvent>() {
@@ -82,11 +90,14 @@ public class Main extends Application {
 			
 		});
 
-		grid.add(header, 1, 0);
-		grid.add(aCleaner, 0, 2);
-		grid.add(cInserter, 2, 2);
+		col2.getChildren().addAll(ccGetter);
+		col2.setSpacing(95.0);
+		
+		grid.add(header, 0, 0);
+		grid.add(col1, 0, 3);
+		grid.add(col2, 0, 5);
 		grid.setHalignment(cInserter, HPos.CENTER);
-		grid.add(ccGetter, 0, 4);
+		grid.setValignment(cInserter, VPos.CENTER);
 		primaryStage.setScene(new Scene(grid, 600, 250));
 		primaryStage.show();
 	}
