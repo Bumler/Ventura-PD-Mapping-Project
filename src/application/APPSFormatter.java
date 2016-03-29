@@ -1,4 +1,4 @@
-package excelTest;
+package application;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -14,12 +14,12 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 public class APPSFormatter {
 
-	public static void main (String[] args) throws IOException{
+	/* public static void main (String[] args) throws IOException{
 		File f = new File("APPS Help Test.xlsx");
 		System.out.println(Formatter(f));
-	}
+	} */
 	
-	public static String Formatter (File f) throws IOException{
+	public String Formatter (File f) throws IOException{
 			//FileInputStream fis = new FileInputStream(new File("APPS Help Test.xlsx"));
 			FileInputStream fis = new FileInputStream(f);
 		

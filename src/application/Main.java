@@ -1,6 +1,7 @@
 package application;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import javafx.application.Application;
@@ -12,6 +13,7 @@ import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.VPos;
+import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -30,12 +32,14 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 public class Main extends Application {
 	// Hello Github!
 	AddressCleanerStage acStage;
 	CityInserterStage ciStage;
 	CommunityCodeGetterStage ccgStage;
+	APPSFormatterStage appsfStage;
 
 	@Override
 	public void start(Stage primaryStage) {
@@ -89,8 +93,19 @@ public class Main extends Application {
 			}
 			
 		});
+		
+		Button aFormatter = new Button();
+		aFormatter.setText("APPS Formatter");
+		aFormatter.setOnAction(new EventHandler<ActionEvent>() {
 
-		col2.getChildren().addAll(ccGetter);
+			@Override
+			public void handle(ActionEvent event) {
+				appsfStage = new APPSFormatterStage();
+			}
+			
+		});
+
+		col2.getChildren().addAll(ccGetter, aFormatter);
 		col2.setSpacing(95.0);
 		
 		grid.add(header, 0, 0);
@@ -105,7 +120,14 @@ public class Main extends Application {
 	public static void main(String[] args) {
 		launch(args);
 	}
-}
+
+	public String formatList(ArrayList<String> list) {
+		StringBuilder sb = new StringBuilder();
+		for (String str : list) {
+			sb.append(str + "\n");
+		}
+		return sb.toString();
+	}
 
 class AddressCleanerStage {
 	Stage primaryStage;
@@ -653,11 +675,76 @@ class CommunityCodeGetterStage {
 		stage.show();
 	}
 	
-	public String formatList(ArrayList<String> list) {
-		StringBuilder sb = new StringBuilder();
-		for (String str : list) {
-			sb.append(str + "\n");
+	
+	}
+
+	class APPSFormatterStage {
+		File file;
+		Stage stage;
+		Label fileName;
+			
+		APPSFormatterStage() {
+			stage = new Stage();
+			GridPane grid = new GridPane();
+			grid.setAlignment(Pos.CENTER);
+			grid.setHgap(10);
+			grid.setVgap(10);
+			grid.setPadding(new Insets(25, 25, 25, 25));
+				
+			APPSFormatter appsf = new APPSFormatter();
+				
+			Text header = new Text("APPS Formatter");
+			header.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
+				
+			Button btn = new Button();
+			btn.setText("Select File");
+			
+			Button runBtn = new Button();
+			runBtn.setText("Run");
+			runBtn.setDisable(true);
+			
+			btn.setOnAction(new EventHandler<ActionEvent>() {
+				@Override
+				public void handle(ActionEvent arg0) {
+					FileChooser fileChooser = new FileChooser();
+					fileChooser.setTitle("File Chooser");
+					file = fileChooser.showOpenDialog(stage);
+					if(file != null) {
+						runBtn.setDisable(false);
+						fileName = new Label(file.getName());
+					}				
+				}
+				
+			});
+			
+			runBtn.setOnAction(new EventHandler<ActionEvent>() {
+
+				@Override
+				public void handle(ActionEvent arg0) {
+					Stage dialog = new Stage();
+					dialog.initStyle(StageStyle.UTILITY);
+					Scene scene = null;
+					try {
+						scene = new Scene(new Group(new Text(25, 25, appsf.Formatter(file))));
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					dialog.setTitle("Success");
+					dialog.setHeight(100);
+					dialog.setWidth(200);
+					dialog.setScene(scene);
+					dialog.show();
+				}
+			});
+			
+			grid.add(header, 0, 0);
+			grid.add(btn, 0,2);
+			grid.setHalignment(btn, HPos.CENTER);
+			grid.add(runBtn, 0, 4);
+			grid.setHalignment(runBtn, HPos.CENTER);
+			stage.setScene(new Scene(grid, 300, 250));
+			stage.show();
 		}
-		return sb.toString();
 	}
 }
