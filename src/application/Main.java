@@ -49,7 +49,7 @@ public class Main extends Application {
 		grid.setAlignment(Pos.TOP_CENTER);
 		grid.setHgap(10);
 		grid.setVgap(10);
-		grid.setPadding(new Insets(35, 25, 0, 25));
+		grid.setPadding(new Insets(35, 0, 0, 0));
 		// grid.setGridLinesVisible(true);
 
 		Text header = new Text("V.C. Data Automator");
@@ -106,14 +106,15 @@ public class Main extends Application {
 		});
 
 		col2.getChildren().addAll(ccGetter, aFormatter);
-		col2.setSpacing(95.0);
+		col2.setSpacing(22.0);
 		
 		grid.add(header, 0, 0);
+		grid.setHalignment(header, HPos.CENTER);
 		grid.add(col1, 0, 3);
 		grid.add(col2, 0, 5);
 		grid.setHalignment(cInserter, HPos.CENTER);
 		grid.setValignment(cInserter, VPos.CENTER);
-		primaryStage.setScene(new Scene(grid, 600, 250));
+		primaryStage.setScene(new Scene(grid, 300, 250));
 		primaryStage.show();
 	}
 
