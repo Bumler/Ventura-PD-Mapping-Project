@@ -56,13 +56,13 @@ public class APPSFormatter {
 			fis.close();
 			
 			try {
-				FileOutputStream fOut = new FileOutputStream("APPS Help Test.xlsx");
+				FileOutputStream fOut = new FileOutputStream(f);
 				fOut.close();
 			}catch (IOException e){
 				wb.close();
 				return (new String("The file is not closed, please close the spreadsheet and try again"));
 			}
-			  FileOutputStream fOut = new FileOutputStream("APPS Help Test.xlsx");
+			  FileOutputStream fOut = new FileOutputStream(f);
 		      wb.write(fOut);
 		      fOut.flush();
 		      // Done deal. Close it.
