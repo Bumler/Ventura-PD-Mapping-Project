@@ -106,7 +106,7 @@ public class Main extends Application {
 		});
 
 		col2.getChildren().addAll(ccGetter, aFormatter);
-		col2.setSpacing(95.0);
+		col2.setSpacing(25.0);
 		
 		grid.add(header, 0, 0);
 		grid.add(col1, 0, 3);
