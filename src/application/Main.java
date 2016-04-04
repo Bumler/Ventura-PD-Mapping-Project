@@ -1,8 +1,5 @@
 //TODO Address Cleaner: Needs Testing
 //TODO City Cleaner: May need to remove spacing on city names pending testing
-//TODO Community Code Getter: Needs a file select display
-//TODO APPS: Needs file select display
-//TODO All could use a description on the file needed
 //TODO A Readme summary of the project
 //TODO Need to do an updated JAR
 
@@ -190,6 +187,7 @@ class AddressCleanerStage {
 				if (file != null) {
 					btn2.setDisable(false);
 					HBox hbFileNames = new HBox();
+					GridPane.clearConstraints(hbFileNames);
 					Label fileName = new Label(file.getName());
 					hbFileNames.getChildren().addAll(btn, fileName);
 					hbFileNames.setSpacing(40.0);
@@ -444,6 +442,9 @@ class AddressCleanerStage {
 		grid.add(btn, 0, 1);
 		grid.add(btn2, 0, 3);
 		grid.add(btnSettings, 0, 4);
+		Text type = new Text("Insert a .txt file");
+		type.setFont(Font.font("Verdana", 9));
+		grid.add(type, 0, 5);
 		primaryStage.setScene(new Scene(grid, 300, 250));
 		primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("/res/badge.png"), 100, 100, true, true));
 		primaryStage.show();
@@ -528,11 +529,13 @@ class CityInserterStage {
 				file1 = fileChooser.showOpenDialog(stage);
 				if (file1 != null) {
 					btn2.setDisable(false);
+					cityFileName = new Label("");
 					hbFileNames = new HBox();
 					hbFileNames.setSpacing(140.0);
 					cityFileName = new Label(file1.getName());
 					hbFileNames.getChildren().addAll(cityFileName, beatFileName);
 					grid.add(hbFileNames, 0, 3);
+					GridPane.clearConstraints(hbFileNames);
 				}
 			}
 
@@ -575,6 +578,9 @@ class CityInserterStage {
 		grid.add(header, 0, 0); // change
 		grid.add(hbButtons, 0, 2); // change
 		grid.add(btn3, 0, 4); // change
+		Text type = new Text("Insert a .txt file");
+		type.setFont(Font.font("Verdana", 9));
+		grid.add(type, 0, 5);
 		stage.setScene(new Scene(grid, 300, 250));
 		stage.getIcons().add(new Image(getClass().getResourceAsStream("/res/badge.png"), 100, 100, true, true));
 		stage.show();
@@ -664,6 +670,8 @@ class CommunityCodeGetterStage {
 				if(file != null) {
 					runBtn.setDisable(false);
 					fileName = new Label(file.getName());
+					grid.add(fileName, 0, 3);
+					GridPane.setHalignment(fileName, HPos.CENTER);
 				}				
 			}
 			
@@ -702,6 +710,10 @@ class CommunityCodeGetterStage {
 		grid.setHalignment(btn, HPos.CENTER);
 		grid.add(runBtn, 0, 4);
 		grid.setHalignment(runBtn, HPos.CENTER);
+		Text type = new Text("Insert a .txt file");
+		type.setFont(Font.font("Verdana", 9));
+		grid.add(type, 0, 5);
+		grid.setHalignment(type, HPos.CENTER);
 		stage.setScene(new Scene(grid, 300, 250));
 		stage.getIcons().add(new Image(getClass().getResourceAsStream("/res/badge.png"), 100, 100, true, true));
 		stage.show();
@@ -744,6 +756,8 @@ class CommunityCodeGetterStage {
 					if(file != null) {
 						runBtn.setDisable(false);
 						fileName = new Label(file.getName());
+						grid.add(fileName, 0, 3);
+						GridPane.setHalignment(fileName, HPos.CENTER);
 					}				
 				}
 				
@@ -775,6 +789,10 @@ class CommunityCodeGetterStage {
 			grid.setHalignment(btn, HPos.CENTER);
 			grid.add(runBtn, 0, 4);
 			grid.setHalignment(runBtn, HPos.CENTER);
+			Text type = new Text("Insert a .xssf (excel) file");
+			type.setFont(Font.font("Verdana", 9));
+			grid.add(type, 0, 5);
+			grid.setHalignment(type, HPos.CENTER);
 			stage.setScene(new Scene(grid, 300, 250));
 			stage.getIcons().add(new Image(getClass().getResourceAsStream("/res/badge.png"), 100, 100, true, true));
 			stage.show();

@@ -58,6 +58,7 @@ public class CityInserter {
 		 // Always wrap FileReader in BufferedReader.
 		 BufferedReader bufferedReader =
 		 new BufferedReader(fileReader);
+		 
 
 		 while((line = bufferedReader.readLine()) != null) {	
 			 System.out.print(iterator+1 +" ");
@@ -97,14 +98,19 @@ public class CityInserter {
 		 bufferedReader.close();
 		 }
 		 catch(FileNotFoundException ex) {
+			 ArrayList<String> err = new ArrayList<String>();
 		 System.out.println(
 		 "Unable to open file '" +
 		 cityFile + "'");
+		 return err;
 		 }
 		 catch(IOException ex) {
-		 System.out.println(
+			 ArrayList<String> err = new ArrayList<String>();
+		 err.add(new String(
 		 "Error reading file '"
-		 + cityFile + "'");
+		 + cityFile + "'"));
+		 return err;
+		 
 		 // Or we could just do this:
 		 // ex.printStackTrace();
 		 }
