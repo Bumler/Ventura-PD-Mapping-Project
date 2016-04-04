@@ -531,11 +531,10 @@ class CityInserterStage {
 					btn2.setDisable(false);
 					cityFileName = new Label("");
 					hbFileNames = new HBox();
-					hbFileNames.setSpacing(140.0);
+					hbFileNames.setSpacing(120.0);
 					cityFileName = new Label(file1.getName());
 					hbFileNames.getChildren().addAll(cityFileName, beatFileName);
 					grid.add(hbFileNames, 0, 3);
-					GridPane.clearConstraints(hbFileNames);
 				}
 			}
 
