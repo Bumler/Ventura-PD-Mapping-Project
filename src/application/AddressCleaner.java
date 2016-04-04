@@ -51,9 +51,9 @@ public class AddressCleaner {
  		                  	address = findClean(address);
  		                  	StringBuilder sb = new StringBuilder();
  		                  	for (int i = 0; i < address.length; i++){
- 		                  		System.out.print(address[i] + " ");
+ 		                  		System.out.print(address[i]);
  		                  		
- 		                  		sb.append(address[i] + " ");
+ 		                  		sb.append(address[i]);
  		                  	}
  		                  	cleanAddresses.add(sb.toString());
  		                  	System.out.println();

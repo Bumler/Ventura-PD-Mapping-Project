@@ -1,7 +1,17 @@
+//TODO Address Cleaner: Needs Testing
+//TODO City Cleaner: May need to remove spacing on city names pending testing
+//TODO Community Code Getter: Needs a file select display
+//TODO APPS: Needs file select display
+//TODO All could use a description on the file needed
+//TODO A Readme summary of the project
+//TODO Need to do an updated JAR
+
 package application;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 
 import javafx.application.Application;
@@ -21,12 +31,15 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
@@ -40,7 +53,7 @@ public class Main extends Application {
 	CityInserterStage ciStage;
 	CommunityCodeGetterStage ccgStage;
 	APPSFormatterStage appsfStage;
-
+	
 	@Override
 	public void start(Stage primaryStage) {
 		primaryStage.setTitle("V.C. Data Automator");
@@ -48,12 +61,17 @@ public class Main extends Application {
 		GridPane grid = new GridPane();
 		grid.setAlignment(Pos.TOP_CENTER);
 		grid.setHgap(10);
+<<<<<<< HEAD
 		grid.setVgap(10);
 		grid.setPadding(new Insets(35, 0, 0, 0));
+=======
+		grid.setPadding(new Insets(35, 25, 0, 25));
+		grid.setStyle("-fx-background-color: BEIGE;");
+>>>>>>> 4368e97511931ccc5e7132617882e52b7861fc9d
 		// grid.setGridLinesVisible(true);
 
 		Text header = new Text("V.C. Data Automator");
-		header.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
+		header.setFont(Font.font("Helvetica", FontWeight.BOLD, 30));
 
 		HBox col1 = new HBox();
 		HBox col2 = new HBox();
@@ -106,6 +124,7 @@ public class Main extends Application {
 		});
 
 		col2.getChildren().addAll(ccGetter, aFormatter);
+<<<<<<< HEAD
 		col2.setSpacing(22.0);
 		
 		grid.add(header, 0, 0);
@@ -115,6 +134,25 @@ public class Main extends Application {
 		grid.setHalignment(cInserter, HPos.CENTER);
 		grid.setValignment(cInserter, VPos.CENTER);
 		primaryStage.setScene(new Scene(grid, 300, 250));
+=======
+		col2.setSpacing(25.0);
+		
+		ImageView image = new ImageView(new Image(getClass().getResourceAsStream("/res/badge.png"), 100, 100, true, true));
+		Text signature = new Text("Created by Henry Bulmer and Chu Oguejiofor");
+		signature.setFill(Color.LIGHTGRAY);
+		
+		grid.add(image,0, 0);
+		grid.add(header, 1, 0);
+		grid.setVgap(10);
+		grid.add(col1, 1, 3);
+		grid.add(col2, 1, 5);
+		grid.add(signature, 1, 10);
+		grid.setHalignment(cInserter, HPos.CENTER);
+		grid.setValignment(cInserter, VPos.CENTER);
+		primaryStage.setScene(new Scene(grid, 500, 300));
+		
+		primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("/res/badge.png"), 100, 100, true, true));
+>>>>>>> 4368e97511931ccc5e7132617882e52b7861fc9d
 		primaryStage.show();
 	}
 
@@ -151,7 +189,7 @@ class AddressCleanerStage {
 		grid.setPadding(new Insets(-15, 25, 0, 25));
 
 		Text header = new Text("Address Cleaner");
-		header.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
+		header.setFont(Font.font("Helvetica", FontWeight.BOLD, 20));
 
 		btn = new Button();
 		btn.setText("Choose File");
@@ -266,6 +304,7 @@ class AddressCleanerStage {
 								grid.add(node, columnIndex, rowIndex - 2);
 							}
 							stage.setScene(new Scene(grid, 900, 450));
+							stage.getIcons().add(new Image(getClass().getResourceAsStream("/res/badge.png"), 100, 100, true, true));
 							stage.show();
 						}
 
@@ -285,6 +324,7 @@ class AddressCleanerStage {
 				grid.add(btnAdd, 0, i);
 				grid.add(btnSave, 16, i);
 				stage.setScene(new Scene(grid, 900, 450));
+				stage.getIcons().add(new Image(getClass().getResourceAsStream("/res/badge.png"), 100, 100, true, true));
 				stage.show();
 
 				btnAdd.setOnAction(new EventHandler<ActionEvent>() {
@@ -334,6 +374,7 @@ class AddressCleanerStage {
 									grid.add(node, columnIndex, rowIndex - 2);
 								}
 								stage.setScene(new Scene(grid, 900, 450));
+								stage.getIcons().add(new Image(getClass().getResourceAsStream("/res/badge.png"), 100, 100, true, true));
 								stage.show();
 							}
 
@@ -343,6 +384,7 @@ class AddressCleanerStage {
 						grid.setRowIndex(btnAdd, i + 2);
 						grid.setRowIndex(btnSave, i + 2);
 						stage.setScene(new Scene(grid, 900, 450));
+						stage.getIcons().add(new Image(getClass().getResourceAsStream("/res/badge.png"), 100, 100, true, true));
 						stage.show();
 					}
 
@@ -418,6 +460,7 @@ class AddressCleanerStage {
 		grid.add(btn2, 0, 3);
 		grid.add(btnSettings, 0, 4);
 		primaryStage.setScene(new Scene(grid, 300, 250));
+		primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("/res/badge.png"), 100, 100, true, true));
 		primaryStage.show();
 	}
 
@@ -443,7 +486,7 @@ class AddressCleanerStage {
 		clipboard.setContent(content);
 
 		stage.setScene(new Scene(grid, 450, 450));
-
+		stage.getIcons().add(new Image(getClass().getResourceAsStream("/res/badge.png"), 100, 100, true, true));
 		stage.show();
 	}
 
@@ -471,11 +514,11 @@ class CityInserterStage {
 		grid.setAlignment(Pos.CENTER);
 		grid.setHgap(10); // change
 		grid.setVgap(20); // change
-		grid.setPadding(new Insets(-35, 25, 0, 25));// change
+		grid.setPadding(new Insets(-35, 25, 0, 25));
 
 		CityInserter cInsert = new CityInserter();
-		Text header = new Text("City Inserter"); // change
-		header.setFont(Font.font("Verdana", FontWeight.BOLD, 20)); // change
+		Text header = new Text("City Inserter");
+		header.setFont(Font.font("Verdana", FontWeight.BOLD, 30)); 
 
 		Button btn1 = new Button();
 		btn1.setText("Select City File");
@@ -520,7 +563,7 @@ class CityInserterStage {
 				if (file2 != null) {
 					btn3.setDisable(false);
 					hbFileNames = new HBox();
-					hbFileNames.setSpacing(140.0);
+					hbFileNames.setSpacing(120.0);
 					beatFileName = new Label(file2.getName());
 					hbFileNames.getChildren().addAll(cityFileName, beatFileName);
 					grid.add(hbFileNames, 0, 3);
@@ -548,6 +591,7 @@ class CityInserterStage {
 		grid.add(hbButtons, 0, 2); // change
 		grid.add(btn3, 0, 4); // change
 		stage.setScene(new Scene(grid, 300, 250));
+		stage.getIcons().add(new Image(getClass().getResourceAsStream("/res/badge.png"), 100, 100, true, true));
 		stage.show();
 
 	}
@@ -580,7 +624,7 @@ class CityInserterStage {
 		clipboard.setContent(content);
 
 		stage.setScene(new Scene(grid, 450, 450));
-
+		stage.getIcons().add(new Image(getClass().getResourceAsStream("/res/badge.png"), 100, 100, true, true));
 		stage.show();
 	}
 
@@ -663,6 +707,7 @@ class CommunityCodeGetterStage {
 				grid.add(communityCodesText, 0, 0);
 				
 				secondaryStage.setScene(new Scene(grid, 450, 450));
+				secondaryStage.getIcons().add(new Image(getClass().getResourceAsStream("/res/badge.png"), 100, 100, true, true));
 				secondaryStage.show();
 			}
 			
@@ -673,6 +718,7 @@ class CommunityCodeGetterStage {
 		grid.add(runBtn, 0, 4);
 		grid.setHalignment(runBtn, HPos.CENTER);
 		stage.setScene(new Scene(grid, 300, 250));
+		stage.getIcons().add(new Image(getClass().getResourceAsStream("/res/badge.png"), 100, 100, true, true));
 		stage.show();
 	}
 	
@@ -745,6 +791,7 @@ class CommunityCodeGetterStage {
 			grid.add(runBtn, 0, 4);
 			grid.setHalignment(runBtn, HPos.CENTER);
 			stage.setScene(new Scene(grid, 300, 250));
+			stage.getIcons().add(new Image(getClass().getResourceAsStream("/res/badge.png"), 100, 100, true, true));
 			stage.show();
 		}
 	}
