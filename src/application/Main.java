@@ -61,13 +61,10 @@ public class Main extends Application {
 		GridPane grid = new GridPane();
 		grid.setAlignment(Pos.TOP_CENTER);
 		grid.setHgap(10);
-<<<<<<< HEAD
 		grid.setVgap(10);
 		grid.setPadding(new Insets(35, 0, 0, 0));
-=======
 		grid.setPadding(new Insets(35, 25, 0, 25));
 		grid.setStyle("-fx-background-color: BEIGE;");
->>>>>>> 4368e97511931ccc5e7132617882e52b7861fc9d
 		// grid.setGridLinesVisible(true);
 
 		Text header = new Text("V.C. Data Automator");
@@ -124,18 +121,7 @@ public class Main extends Application {
 		});
 
 		col2.getChildren().addAll(ccGetter, aFormatter);
-<<<<<<< HEAD
 		col2.setSpacing(22.0);
-		
-		grid.add(header, 0, 0);
-		grid.setHalignment(header, HPos.CENTER);
-		grid.add(col1, 0, 3);
-		grid.add(col2, 0, 5);
-		grid.setHalignment(cInserter, HPos.CENTER);
-		grid.setValignment(cInserter, VPos.CENTER);
-		primaryStage.setScene(new Scene(grid, 300, 250));
-=======
-		col2.setSpacing(25.0);
 		
 		ImageView image = new ImageView(new Image(getClass().getResourceAsStream("/res/badge.png"), 100, 100, true, true));
 		Text signature = new Text("Created by Henry Bulmer and Chu Oguejiofor");
@@ -152,7 +138,6 @@ public class Main extends Application {
 		primaryStage.setScene(new Scene(grid, 500, 300));
 		
 		primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("/res/badge.png"), 100, 100, true, true));
->>>>>>> 4368e97511931ccc5e7132617882e52b7861fc9d
 		primaryStage.show();
 	}
 
