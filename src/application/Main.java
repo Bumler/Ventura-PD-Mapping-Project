@@ -50,6 +50,7 @@ public class Main extends Application {
 	CityInserterStage ciStage;
 	CommunityCodeGetterStage ccgStage;
 	APPSFormatterStage appsfStage;
+	NarcFormatterStage narcStage;
 	
 	@Override
 	public void start(Stage primaryStage) {
@@ -69,6 +70,7 @@ public class Main extends Application {
 
 		HBox col1 = new HBox();
 		HBox col2 = new HBox();
+		HBox row3 = new HBox();
 		
 		Button aCleaner = new Button();
 		aCleaner.setText("Address Cleaner");
@@ -120,6 +122,19 @@ public class Main extends Application {
 		col2.getChildren().addAll(ccGetter, aFormatter);
 		col2.setSpacing(22.0);
 		
+		Button narcFormatter = new Button();
+		narcFormatter.setText("Narc Data Formatter");
+		narcFormatter.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				narcStage = new NarcFormatterStage();
+			}
+			
+		});
+		
+		row3.getChildren().addAll(narcFormatter);
+		
 		ImageView image = new ImageView(new Image(getClass().getResourceAsStream("/res/badge.png"), 100, 100, true, true));
 		Text signature = new Text("Created by Henry Bulmer and Chu Oguejiofor");
 		signature.setFill(Color.LIGHTGRAY);
@@ -129,10 +144,11 @@ public class Main extends Application {
 		grid.setVgap(10);
 		grid.add(col1, 1, 3);
 		grid.add(col2, 1, 5);
-		grid.add(signature, 1, 10);
+		grid.add(row3, 1, 7);
+		grid.add(signature, 1, 11);
 		grid.setHalignment(cInserter, HPos.CENTER);
 		grid.setValignment(cInserter, VPos.CENTER);
-		primaryStage.setScene(new Scene(grid, 500, 300));
+		primaryStage.setScene(new Scene(grid, 500, 350));
 		
 		primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("/res/badge.png"), 100, 100, true, true));
 		primaryStage.show();
@@ -771,6 +787,83 @@ class CommunityCodeGetterStage {
 					Scene scene = null;
 					try {
 						scene = new Scene(new Group(new Text(25, 25, appsf.Formatter(file))));
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					dialog.setTitle("Success");
+					dialog.setHeight(100);
+					dialog.setWidth(200);
+					dialog.setScene(scene);
+					dialog.show();
+				}
+			});
+			
+			grid.add(header, 0, 0);
+			grid.add(btn, 0,2);
+			grid.setHalignment(btn, HPos.CENTER);
+			grid.add(runBtn, 0, 4);
+			grid.setHalignment(runBtn, HPos.CENTER);
+			Text type = new Text("Insert a .xssf (excel) file");
+			type.setFont(Font.font("Verdana", 9));
+			grid.add(type, 0, 5);
+			grid.setHalignment(type, HPos.CENTER);
+			stage.setScene(new Scene(grid, 300, 250));
+			stage.getIcons().add(new Image(getClass().getResourceAsStream("/res/badge.png"), 100, 100, true, true));
+			stage.show();
+		}
+	}
+	
+	class NarcFormatterStage {
+		File file;
+		Stage stage;
+		Label fileName;
+			
+		NarcFormatterStage() {
+			stage = new Stage();
+			GridPane grid = new GridPane();
+			grid.setAlignment(Pos.CENTER);
+			grid.setHgap(10);
+			grid.setVgap(10);
+			grid.setPadding(new Insets(25, 25, 25, 25));
+				
+			NarcDataFormatter narc = new NarcDataFormatter();
+				
+			Text header = new Text("Narc Data Formatter");
+			header.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
+				
+			Button btn = new Button();
+			btn.setText("Select File");
+			
+			Button runBtn = new Button();
+			runBtn.setText("Run");
+			runBtn.setDisable(true);
+			
+			btn.setOnAction(new EventHandler<ActionEvent>() {
+				@Override
+				public void handle(ActionEvent arg0) {
+					FileChooser fileChooser = new FileChooser();
+					fileChooser.setTitle("File Chooser");
+					file = fileChooser.showOpenDialog(stage);
+					if(file != null) {
+						runBtn.setDisable(false);
+						fileName = new Label(file.getName());
+						grid.add(fileName, 0, 3);
+						GridPane.setHalignment(fileName, HPos.CENTER);
+					}				
+				}
+				
+			});
+			
+			runBtn.setOnAction(new EventHandler<ActionEvent>() {
+
+				@Override
+				public void handle(ActionEvent arg0) {
+					Stage dialog = new Stage();
+					dialog.initStyle(StageStyle.UTILITY);
+					Scene scene = null;
+					try {
+						scene = new Scene(new Group(new Text(25, 25, narc.Formatter(file))));
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
