@@ -819,6 +819,8 @@ class CommunityCodeGetterStage {
 		Stage stage;
 		Label fileName;
 			
+		NarcDataFormatter narc;
+		
 		NarcFormatterStage() {
 			stage = new Stage();
 			GridPane grid = new GridPane();
@@ -826,8 +828,6 @@ class CommunityCodeGetterStage {
 			grid.setHgap(10);
 			grid.setVgap(10);
 			grid.setPadding(new Insets(25, 25, 25, 25));
-				
-			NarcDataFormatter narc = new NarcDataFormatter();
 				
 			Text header = new Text("Narc Data Formatter");
 			header.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
@@ -838,6 +838,23 @@ class CommunityCodeGetterStage {
 			Button runBtn = new Button();
 			runBtn.setText("Run");
 			runBtn.setDisable(true);
+			
+			TextField rowText = new TextField();
+			rowText.setMinWidth(50);
+			rowText.setPrefWidth(50);
+			rowText.setMaxWidth(400);
+			
+			Button restoreBtn = new Button();
+			restoreBtn.setText("Restore");
+			restoreBtn.setDisable(true);
+			
+			HBox hb = new HBox();
+			hb.getChildren().addAll(restoreBtn, rowText);
+			hb.setPadding(new Insets(0, 0, 0, 60));
+			
+			Button demoBtn = new Button();
+			demoBtn.setText("Demographics");
+			demoBtn.setDisable(true);
 			
 			btn.setOnAction(new EventHandler<ActionEvent>() {
 				@Override
@@ -850,6 +867,13 @@ class CommunityCodeGetterStage {
 						fileName = new Label(file.getName());
 						grid.add(fileName, 0, 3);
 						GridPane.setHalignment(fileName, HPos.CENTER);
+						
+						try {
+							narc = new NarcDataFormatter(file);
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 					}				
 				}
 				
@@ -863,7 +887,7 @@ class CommunityCodeGetterStage {
 					dialog.initStyle(StageStyle.UTILITY);
 					Scene scene = null;
 					try {
-						scene = new Scene(new Group(new Text(25, 25, narc.Formatter(file))));
+						scene = new Scene(new Group(new Text(25, 25, narc.Formatter())));
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -871,6 +895,48 @@ class CommunityCodeGetterStage {
 					dialog.setTitle("Success");
 					dialog.setHeight(100);
 					dialog.setWidth(200);
+					dialog.setScene(scene);
+					dialog.show();
+					
+					//this is a bandaid fix but if the person ran it twice the file would get deleted
+					runBtn.setDisable(true);
+					restoreBtn.setDisable(false);
+					demoBtn.setDisable(false);
+				}
+			});
+			
+			restoreBtn.setOnAction(new EventHandler<ActionEvent>() {
+
+				@Override
+				public void handle(ActionEvent arg0) {
+					Stage dialog = new Stage();
+					dialog.initStyle(StageStyle.UTILITY);
+					Scene scene = null;
+					try {
+						scene = new Scene(new Group(new Text(25, 25, narc.restore(rowText.getText()))));
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					dialog.setTitle("Success");
+					dialog.setHeight(100);
+					dialog.setWidth(200);
+					dialog.setScene(scene);
+					dialog.show();
+				}
+			});
+			
+			demoBtn.setOnAction(new EventHandler<ActionEvent>() {
+
+				@Override
+				public void handle(ActionEvent arg0) {
+					Stage dialog = new Stage();
+					dialog.initStyle(StageStyle.UTILITY);
+					Scene scene = null;
+					scene = new Scene(new Group(new Text(25, 25, narc.getDemographics())));
+					dialog.setTitle("Success");
+					dialog.setHeight(300);
+					dialog.setWidth(250);
 					dialog.setScene(scene);
 					dialog.show();
 				}
@@ -885,6 +951,9 @@ class CommunityCodeGetterStage {
 			type.setFont(Font.font("Verdana", 9));
 			grid.add(type, 0, 5);
 			grid.setHalignment(type, HPos.CENTER);
+			grid.add(hb, 0, 7);
+			grid.add(demoBtn, 0, 9);
+			
 			stage.setScene(new Scene(grid, 300, 250));
 			stage.getIcons().add(new Image(getClass().getResourceAsStream("/res/badge.png"), 100, 100, true, true));
 			stage.show();

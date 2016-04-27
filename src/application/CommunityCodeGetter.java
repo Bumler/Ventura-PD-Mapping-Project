@@ -62,7 +62,6 @@ public class CommunityCodeGetter {
 		          	}
 		          	communityCodes.set(0, "Community Codes");
 		          	return communityCodes;
-		          	//ayylmao
 	}
 	
 	public HashMap<String , String> getMap (){
