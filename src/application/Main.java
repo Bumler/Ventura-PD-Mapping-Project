@@ -850,11 +850,15 @@ class CommunityCodeGetterStage {
 			
 			HBox hb = new HBox();
 			hb.getChildren().addAll(restoreBtn, rowText);
-			hb.setPadding(new Insets(0, 0, 0, 60));
+			hb.setPadding(new Insets(0, 0, 0, 50));
 			
 			Button demoBtn = new Button();
 			demoBtn.setText("Demographics");
 			demoBtn.setDisable(true);
+			
+			HBox hb2 = new HBox();
+			hb2.getChildren().addAll(demoBtn);
+			hb2.setPadding(new Insets(0, 0, 0, 60));
 			
 			btn.setOnAction(new EventHandler<ActionEvent>() {
 				@Override
@@ -883,19 +887,31 @@ class CommunityCodeGetterStage {
 
 				@Override
 				public void handle(ActionEvent arg0) {
-					Stage dialog = new Stage();
+					GridPane grid = new GridPane();
+					grid.setAlignment(Pos.CENTER);
+					grid.setHgap(10);
+					grid.setVgap(10);
+					grid.setPadding(new Insets(25, 25, 25, 25));
+
+					String narcString = ("");
+					try {
+						narcString = narc.Formatter() + formatList(narc.getFlags());
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					TextArea cityText = new TextArea(narcString);
+					cityText.setEditable(false);
+					grid.add(cityText, 0, 0);
+					
+					Stage dialog = new Stage();					
 					dialog.initStyle(StageStyle.UTILITY);
 					Scene scene = null;
-					try {
-						scene = new Scene(new Group(new Text(25, 25, narc.Formatter())));
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
+
 					dialog.setTitle("Success");
-					dialog.setHeight(100);
-					dialog.setWidth(200);
-					dialog.setScene(scene);
+					dialog.setHeight(300);
+					dialog.setWidth(300);
+					dialog.setScene(new Scene(grid, 600,600));
 					dialog.show();
 					
 					//this is a bandaid fix but if the person ran it twice the file would get deleted
@@ -952,11 +968,21 @@ class CommunityCodeGetterStage {
 			grid.add(type, 0, 5);
 			grid.setHalignment(type, HPos.CENTER);
 			grid.add(hb, 0, 7);
-			grid.add(demoBtn, 0, 9);
+			grid.add(hb2, 0, 9);
 			
 			stage.setScene(new Scene(grid, 300, 250));
 			stage.getIcons().add(new Image(getClass().getResourceAsStream("/res/badge.png"), 100, 100, true, true));
 			stage.show();
+		}
+		
+		public String formatList(ArrayList<Integer> list) {
+			StringBuilder sb = new StringBuilder();
+			sb.append("\n");
+			sb.append("Changes made in the following rows: \n");
+			for (int str : list) {
+				sb.append(str + "\n");
+			}
+			return sb.toString();
 		}
 	}
 }
